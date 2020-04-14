@@ -1,8 +1,11 @@
 <?php
+$pattern = '/^(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){255,})(?!(?:(?:\\x22?\\x5C[\\x00-\\x7E]\\x22?)|(?:\\x22?[^\\x5C\\x22]\\x22?)){65,}@)(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22))(?:\\.(?:(?:[\\x21\\x23-\\x27\\x2A\\x2B\\x2D\\x2F-\\x39\\x3D\\x3F\\x5E-\\x7E]+)|(?:\\x22(?:[\\x01-\\x08\\x0B\\x0C\\x0E-\\x1F\\x21\\x23-\\x5B\\x5D-\\x7F]|(?:\\x5C[\\x00-\\x7F]))*\\x22)))*@(?:(?:(?!.*[^.]{64,})(?:(?:(?:xn--)?[a-z0-9]+(?:-+[a-z0-9]+)*\\.){1,126}){1,}(?:(?:[a-z][a-z0-9]*)|(?:(?:xn--)[a-z0-9]+))(?:-+[a-z0-9]+)*)|(?:\\[(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){7})|(?:(?!(?:.*[a-f0-9][:\\]]){7,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,5})?)))|(?:(?:IPv6:(?:(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){5}:)|(?:(?!(?:.*[a-f0-9]:){5,})(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3})?::(?:[a-f0-9]{1,4}(?::[a-f0-9]{1,4}){0,3}:)?)))?(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))(?:\\.(?:(?:25[0-5])|(?:2[0-4][0-9])|(?:1[0-9]{2})|(?:[1-9]?[0-9]))){3}))\\]))$/';
+
 $sessionId = $_POST['sessionId'];
 $serviceCode = $_POST['serviceCode'];
 $networkCode = $_POST['networkCode'];
 $phoneNumber = $_POST['phoneNumber'];
+
 $text = $_POST['text'];
 $response = "";
 
@@ -64,13 +67,13 @@ if($text == "" ){
 	$response .= "2. Female names \n";
 	$response .= "00. Back \n";
 	
-}else if (preg_match("/1[*][a-zA-Z0-9]+[*][a-zA-Z0-9]+$/",$text)) {
+}else if (preg_match("/1[*]$pattern+[*][a-zA-Z0-9]+$/",$text)) {
 	$exploded = explode("*",$text);
-	$email = $exploded[count($exploded)-1];
-	$pin = $exploded[count($exploded)-2];
-	$response = "END Details are " . $email . " - " . $pin . "\n";
+	$email = $exploded[count($exploded)-2];
+	$pin = $exploded[count($exploded)-1];
+	$response = "END Email/Pin are " . $email . " / " . $pin . "\n";
 
-}else if (preg_match("/1[*][a-zA-Z0-9]+$/",$text)) {
+}else if (preg_match("/1[*]$pattern+$/",$text)) {
 	$response = "CON Enter pin number \n";
 
 }else if (preg_match("/1$/",$text)) {
@@ -79,6 +82,8 @@ if($text == "" ){
 }
 header('Content-type: text/plain');
 echo $response;	
+
+
 
 ?>
 
