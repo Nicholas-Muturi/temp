@@ -67,13 +67,13 @@ if($text == "" ){
 	$response .= "2. Female names \n";
 	$response .= "00. Back \n";
 	
-}else if (preg_match("/1[*]$pattern+[*][a-zA-Z0-9]+$/",$text)) {
+}else if (preg_match("/1[*][a-zA-Z0-9_.+]+@[a-zA-Z0-9]+.[a-zA-Z]+[*][a-zA-Z0-9]+$/",$text)) {
 	$exploded = explode("*",$text);
 	$email = $exploded[count($exploded)-2];
 	$pin = $exploded[count($exploded)-1];
 	$response = "END Email/Pin are " . $email . " / " . $pin . "\n";
 
-}else if (preg_match("/1[*]$pattern+$/",$text)) {
+}else if (preg_match("/1[*][a-zA-Z0-9_.+]+@[a-zA-Z0-9]+.[a-zA-Z]+$/",$text)) {
 	$response = "CON Enter pin number \n";
 
 }else if (preg_match("/1$/",$text)) {
