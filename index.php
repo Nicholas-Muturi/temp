@@ -66,8 +66,8 @@ if($text == "" ){
 	
 }else if (preg_match("/1[*][a-zA-Z0-9]+[*][a-zA-Z0-9]+$/",$text)) {
 	$exploded = explode("*",$text);
-	$email = $exploded[1];
-	$pin = $exploded[2];
+	$email = $exploded[count($exploded)-1];
+	$pin = $exploded[count($exploded)-2];
 	$response = "END Details are " . $email . " - " . $pin . "\n";
 
 }else if (preg_match("/1[*][a-zA-Z0-9]+$/",$text)) {
