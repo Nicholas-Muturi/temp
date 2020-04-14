@@ -17,7 +17,7 @@ if($text == "" ){
     $response .= "6. More \n";
 
 
-}else if(preg_match("/6[*]1$/",$text)){
+}else if(preg_match("/6[*]00$/",$text)){
 	
 	$response = "CON Welcome. Select an option below \n";
 	$response .= "1. Register \n";
@@ -31,7 +31,7 @@ if($text == "" ){
 	$response = "CON Select an option below \n";	
 	$response .= "7. Get instant ambulance \n";
     $response .= "8. Subscribe daily tips \n";
-    $response .= "1. Back \n";
+    $response .= "00. Back \n";
 
 }else if(preg_match("/2[*]2$/",$text)){
 	$response = "END Female names \n";
@@ -62,7 +62,7 @@ if($text == "" ){
 	$response = "CON Select an option below \n";
 	$response .= "1. Male names \n";
 	$response .= "2. Female names \n";
-	$response .= "0. Back \n";
+	$response .= "00. Back \n";
 	
 }else if (preg_match("/1[*][a-zA-Z0-9]+[*][a-zA-Z0-9]+$/",$text)) {
 	$exploded = explode("*",$text);
